@@ -54,8 +54,11 @@ export class HomePage {
     });
   }
 
-  cadastrar() {
+  goToRegistrarUsuario() {
     this.navCtrl.navigateForward('/register');
+  }
+  goToRecuperarSenha() {
+    this.navCtrl.navigateForward('/recuperar');
   }
 
   async logadoComSucesso() {
