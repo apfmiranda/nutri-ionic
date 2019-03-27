@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Cadastro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <h2 style="text-align: center">Vamos lá!</h2>
+
+    <div class="ion-padding">
+      <ion-item>
+          <ion-label position="stacked">Email: </ion-label>
+          <ion-input type="text" #usuario></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label position="stacked">Senha: </ion-label>
+          <ion-input type="password" #senha></ion-input>
+      </ion-item>
+      
+      <ion-button expand="block" (click)="registrar()" >Cadastrar</ion-button>
+      
+    </div>
+</ion-content>
