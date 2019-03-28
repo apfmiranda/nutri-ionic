@@ -1,6 +1,8 @@
+import { ToastService } from './../shared/toast.service';
 import { Component, ViewChild } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 
 export class Users{
   email: string;
@@ -21,36 +23,45 @@ export class HomePage {
 
   constructor (public navCtrl: NavController,
                public toastCtrl: ToastController,
+               public toast: ToastService,
                public fire: AngularFireAuth) {}
 
   entrar() {
     this.fire.auth.signInWithEmailAndPassword(this.email.value, this.password.value)
     .then( data => {
-      console.log('Dadaos do login: ', data);
-
       this.users.email = this.email.value;
       this.users.senha = this.password.value;
 
-      this.logadoComSucesso();
+      this.toast.show('Logado com sucesso');
       this.navCtrl.navigateRoot('/dicas');
     })
     .catch((error: any) => {
       switch (error.code) {
         case 'auth/invalid-email':
-        this.falhaNoLogin('E-mail inválido');
+        this.toast.show('E-mail inválido');
           break;
         case 'auth/user-disabled':
-          this.falhaNoLogin('E-mail desativado');
+          this.toast.show('E-mail desativado');
           break;
         case 'auth/user-not-found':
-          this.falhaNoLogin('Usuário não encontrado');
+          this.toast.show('Usuário não encontrado');
           break;
         case 'auth/wrong-password':
-          this.falhaNoLogin('Credenciais inválidas');
+          this.toast.show('Credenciais inválidas');
           break;
         default:
-          this.falhaNoLogin(error.message);
+          this.toast.show(error.message);
       }
+    });
+  }
+
+  loginWithFacebook() {
+    this.fire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+    .then(data => {
+      this.navCtrl.navigateRoot('/dicas');
+    })
+    .catch((error: any) => {
+      this.toast.show(error.message);
     });
   }
 
@@ -59,28 +70,6 @@ export class HomePage {
   }
   goToRecuperarSenha() {
     this.navCtrl.navigateForward('/recuperar');
-  }
-
-  async logadoComSucesso() {
-    const toast =  await this.toastCtrl.create({
-      message: 'Logado com sucesso.',
-      showCloseButton: true,
-      position: 'bottom',
-      closeButtonText: 'fechar',
-      duration: 2000
-    });
-    toast.present();
-  }
-
-  async falhaNoLogin(error: string) {
-    const toast =  await this.toastCtrl.create({
-      message: 'Erro: ' + error,
-      showCloseButton: true,
-      position: 'bottom',
-      closeButtonText: 'fechar',
-      duration: 2000
-    });
-    toast.present();
   }
 
 }
