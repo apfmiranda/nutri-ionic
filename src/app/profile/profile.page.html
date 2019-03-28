@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Meu perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <ion-item *ngIf="fotoPerfil">
+      <ion-thumbnail slot="start">
+        <img src="{{ facebook.fotoUrl }}" />
+      </ion-thumbnail>
+      <ion-label>
+        <h3>{{ facebook.nome }}</h3>
+        <p>{{ email }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item *ngIf="!fotoPerfil">
+      <ion-thumbnail slot="start">
+        <img src="assets/imgs/fotoPerfil.png" />
+      </ion-thumbnail>
+      <ion-label>
+        <h3>Nutri Brasil</h3>
+        <p>{{ email }}</p>
+      </ion-label>
+    </ion-item>
+  </div>
+</ion-content>
