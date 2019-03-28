@@ -65,6 +65,17 @@ export class HomePage {
     });
   }
 
+  loginVisitante() {
+    this.fire.auth.signInAnonymously()
+    .then(data => {
+      this.navCtrl.navigateRoot('/dicas');
+      this.toast.show('Logado com sucesso');
+    })
+    .catch((error: any) => {
+      this.toast.show(error.message);
+    });
+  }
+
   goToRegistrarUsuario() {
     this.navCtrl.navigateForward('/register');
   }
