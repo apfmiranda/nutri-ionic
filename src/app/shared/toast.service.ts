@@ -14,7 +14,7 @@ export class ToastService {
       showCloseButton: true,
       position: 'bottom',
       closeButtonText: 'fechar',
-      duration: 2000
+      duration: 5000
     });
     toast.present();
   }
