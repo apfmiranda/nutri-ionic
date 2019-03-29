@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Ultimas Dicas</ion-title>
-    <ion-buttons slot="primary">    
+    <ion-buttons slot="primary">
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out"></ion-icon>
       </ion-button>
@@ -10,7 +10,32 @@
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">  
-      <p>{{ posts | json }}</p>
-  </div>  
+  <div class="ion-padding">
+    
+    <ion-card *ngFor="let post of posts" class="hydrated" >
+      <img src="{{ post.better_featured_image.source_url }}" />
+      
+      <ion-card-header class="hydrated">
+        <ion-card-subtitle role="heading" aria-level="3" class="hydrated">{{ post.type }}</ion-card-subtitle>
+        <ion-card-title [innerHTML]="post.title.rendered" role="heading" aria-level="2" class="hydrated"></ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="hydrated" [innerHTML]="post.content.rendered"></ion-card-content>
+      <ion-row>
+        <ion-col>
+          <div>
+              <ion-button slot="start" size="small" fill="clear">{{ post.date.split('T')[0] | date: 'd MMM, y' }}</ion-button>
+          </div>
+        </ion-col>          
+        <ion-col>
+          <div>
+            <ion-button slot="end" size="small" (click)="goToPost($event, post)">Leia mais</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    
+
+    </ion-card>
+
+  </div>
 </ion-content>

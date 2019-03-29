@@ -46,4 +46,8 @@ export class DicasPage implements OnInit {
     }
   }
 
+  goToPost(event, post) {
+    this.navCtrl.navigateForward('post');
+  }
+
 }
