@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { HttpClientModule } from '@angular/common/http';
 
 const firebaseAuth = {
   apiKey: 'AIzaSyCaQ29_oucrM4YLTAncQq4-T3o9gqhBJaw',
@@ -25,6 +26,7 @@ const firebaseAuth = {
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
+    HttpClientModule,
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
