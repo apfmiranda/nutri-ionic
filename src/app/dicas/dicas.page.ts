@@ -1,13 +1,11 @@
-import { NavController, IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { WordpressService } from '../services/wordpress.service';
-import { from, Subscription } from 'rxjs';
-import { switchMap, debounceTime, distinctUntilChanged, catchError} from 'rxjs/operators'
 import { LoadingService } from '../services/loading.service';
-import { Router, NavigationStart } from '@angular/router';
+import { Router } from '@angular/router';
+import { Post } from '../post/post.model';
 
-export let browserRefresh = false;
 
 @Component({
   selector: 'app-dicas',
@@ -17,9 +15,8 @@ export let browserRefresh = false;
 export class DicasPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
-  posts: Array<any> = new Array<any>();
+  posts: Array<Post> = new Array<Post>();
   isLoading = false;
-  browserRefresh = true;
 
 
   constructor(private router: Router,
@@ -32,9 +29,7 @@ export class DicasPage implements OnInit {
     this.router.navigate(['/']);
   }
 
-  ngOnInit() {
-    this.browserRefresh = browserRefresh;
-  }
+  ngOnInit() {}
 
   async ionViewWillEnter() {
     await this.loadLastPosts();
@@ -43,11 +38,13 @@ export class DicasPage implements OnInit {
   private async loadLastPosts() {
     if (!(this.posts.length > 0)) {
       await this.loading.present('DicasPage.ionViewWillEnter', 'Carregando posts...');
-      this.wpService.getLastPosts().subscribe((response) => {
-        for (const post of response) {
-          post.excerpt.rendered = post.excerpt.rendered.split('<a')[0] + '<]';
-          this.posts.push(post);
-        }
+      this.wpService.getLastPosts().subscribe((newPosts) => {
+
+        newPosts.forEach(onePost => {
+          onePost.excerpt.rendered = onePost.excerpt.rendered.split('<a')[0];
+          this.posts.push(onePost);
+        });
+
         this.loading.dismiss('DicasPage.ionViewWillEnter');
       });
     }
@@ -56,13 +53,13 @@ export class DicasPage implements OnInit {
   async loadMoreData(event) {
     const page = (Math.ceil(this.posts.length / 10) + 1);
 
-    this.wpService.getLastPosts(page).subscribe((response) => {
+    this.wpService.getLastPosts(page).subscribe((newPosts) => {
 
-      for (const post of response) {
+      for (const post of newPosts) {
         if (this.isLoading) {
           event.target.complete();
         }
-        post.excerpt.rendered = post.excerpt.rendered.split('<a')[0] + '<]';
+        post.excerpt.rendered = post.excerpt.rendered.split('<a')[0];
         this.posts.push(post);
         this.isLoading = false;
         this.toggleInfiniteScroll();
@@ -81,8 +78,9 @@ export class DicasPage implements OnInit {
 
   }
 
-  goToPost(event, post) {
-    this.router.navigate(['/post']);
+  goToPost(post: any) {
+    // console.log('goToPost', post.id);
+    this.router.navigate(['/post', {id: post.id}]);
   }
 
   toggleInfiniteScroll() {

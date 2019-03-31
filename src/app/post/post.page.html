@@ -1,9 +1,38 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>post</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
+<ion-content *ngIf="post" >
+    <div class="ion-padding">
+
+      <ion-card>
+        <img src="{{ post.better_featured_image.source_url }}" />
+        <ion-card-header>
+          <ion-card-subtitle>
+              <ion-row *ngFor="let cat of categories" >                  
+                  <ion-col>
+                    <ion-badge>
+                        {{ cat.name }}
+                    </ion-badge>
+                  </ion-col>
+                </ion-row>
+          </ion-card-subtitle>
+          <ion-card-title [innerHTML]="post.title.rendered"></ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content [innerHTML]="post.content.rendered"></ion-card-content>
+        <ion-row class="ion-justify-content-around">
+          <ion-col class="ion-align-self-center">            
+            <ion-icon name="calendar"></ion-icon> {{ post.date.split('T')[0] | date: 'd MMM, y' }}            
+          </ion-col>          
+          <ion-col class="ion-align-self-center">            
+            <ion-icon name="person"></ion-icon> {{ autor }}
+          </ion-col>
+        </ion-row>
+      </ion-card>
+
+    </div >
 </ion-content>

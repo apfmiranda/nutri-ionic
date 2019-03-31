@@ -29,7 +29,7 @@
         <ion-card-title [innerHTML]="post.title.rendered" role="heading" aria-level="2" class="hydrated"></ion-card-title>
       </ion-card-header>
 
-      <ion-card-content class="hydrated" [innerHTML]="post.content.rendered"></ion-card-content>
+      <ion-card-content class="hydrated" [innerHTML]="post.excerpt.rendered"></ion-card-content>
       <ion-row>
         <ion-col>
           <div>
@@ -38,7 +38,7 @@
         </ion-col>          
         <ion-col>
           <div>
-            <ion-button slot="end" size="small" (click)="goToPost($event, post)">Leia mais</ion-button>
+            <ion-button slot="end" size="small" (click)="goToPost(post)">Leia mais</ion-button>
           </div>
         </ion-col>
       </ion-row>    

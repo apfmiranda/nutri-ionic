@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import * as Config from '../config';
 import { Observable } from 'rxjs';
 import {forkJoin} from 'rxjs';
+import { Post } from '../post/post.model';
 
 
 @Injectable({
@@ -10,27 +11,38 @@ import {forkJoin} from 'rxjs';
 })
 export class WordpressService {
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {}
 
-  getLastPosts(page: number = 1): Observable<any>  {
-    return this.http.get(Config.WORDPRESS_REST_API_URL + 'posts?page=' + page);
+  getLastPosts(page: number = 1): Observable<Post[]>  {
+    return this.http.get<Post[]>(Config.WORDPRESS_REST_API_URL + 'posts?page=' + page);
   }
 
-  getAuthor(author: any): Observable<any> {
+  getAuthor(author: number): Observable<any> {
     return this.http.get(Config.WORDPRESS_REST_API_URL + 'users/' + author);
   }
 
-  getPostCategories(post: any): Observable<any>  {
+  getPostCategories(post: Post): Observable<any>  {
     const observableBatch = [];
 
-    post.categories.forEach((category: any) => {
-      observableBatch.push(this.getCategory(category));
-    });
+    let categories: Array<any> = new Array<any>();
+    categories = post.categories;
+
+    for (let index = 0; index < categories.length; index++) {
+      if (categories[index] !== ',') {
+        observableBatch.push(this.getCategory(categories[index]));
+      }
+    }
 
     return forkJoin(observableBatch);
-   }
+  }
 
-  getCategory(category: any): Observable<any> {
+  private getCategory(category: any): Observable<any> {
     return this.http.get(Config.WORDPRESS_REST_API_URL + 'categories/' + category);
   }
+
+  getPost(id: any): Observable<Post> {
+    return this.http.get<Post>(Config.WORDPRESS_REST_API_URL + 'posts/' + id);
+  }
+
+
 }
