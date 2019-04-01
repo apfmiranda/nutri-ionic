@@ -12,15 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HttpClientModule } from '@angular/common/http';
-
-const firebaseAuth = {
-  apiKey: 'AIzaSyCaQ29_oucrM4YLTAncQq4-T3o9gqhBJaw',
-  authDomain: 'nutri-daa14.firebaseapp.com',
-  databaseURL: 'https://nutri-daa14.firebaseio.com',
-  projectId: 'nutri-daa14',
-  storageBucket: 'nutri-daa14.appspot.com',
-  messagingSenderId: '944394968956'
-};
+import { firebaseAuth } from './firebaseAuth';
 
 @NgModule({
   declarations: [AppComponent],

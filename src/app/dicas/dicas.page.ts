@@ -26,7 +26,7 @@ export class DicasPage implements OnInit {
 
   logout() {
     this.fire.auth.signOut();
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   ngOnInit() {}
@@ -79,8 +79,7 @@ export class DicasPage implements OnInit {
   }
 
   goToPost(post: any) {
-    // console.log('goToPost', post.id);
-    this.router.navigate(['/post', {id: post.id}]);
+    this.router.navigate(['/tabs/post', {id: post.id}]);
   }
 
   toggleInfiniteScroll() {

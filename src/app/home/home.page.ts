@@ -33,7 +33,7 @@ export class HomePage {
       this.users.senha = this.password.value;
 
       this.toast.show('Logado com sucesso');
-      this.navCtrl.navigateRoot('/dicas');
+      this.navCtrl.navigateRoot('/tabs/dicas');
     })
     .catch((error: any) => {
       switch (error.code) {
@@ -58,7 +58,7 @@ export class HomePage {
   loginWithFacebook() {
     this.fire.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
     .then(data => {
-      this.navCtrl.navigateRoot('/dicas');
+      this.navCtrl.navigateRoot('/tabs/dicas');
     })
     .catch((error: any) => {
       this.toast.show(error.message);
@@ -68,7 +68,7 @@ export class HomePage {
   loginVisitante() {
     this.fire.auth.signInAnonymously()
     .then(data => {
-      this.navCtrl.navigateRoot('/dicas');
+      this.navCtrl.navigateRoot('/tabs/dicas');
       this.toast.show('Logado com sucesso');
     })
     .catch((error: any) => {

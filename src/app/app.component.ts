@@ -20,7 +20,7 @@ export class AppComponent {
 
     const authObserver = this.afAuth.authState.subscribe(users => {
       if (users) {
-        this.navCtrl.navigateRoot('/dicas');
+        this.navCtrl.navigateRoot('/tabs/dicas');
         authObserver.unsubscribe();
       } else {
         this.navCtrl.navigateRoot('');

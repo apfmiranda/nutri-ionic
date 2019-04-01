@@ -23,7 +23,7 @@ export class RecuperarPage implements OnInit {
     this.fire.auth.sendPasswordResetEmail(this.emailDigitado.value)
     .then(() => {
       this.toast.show('Solicitação enviada por email');
-      this.navCtrl.navigateForward('');
+      this.navCtrl.navigateForward('/home');
     })
     .catch((error: any) => {
       switch (error.code) {

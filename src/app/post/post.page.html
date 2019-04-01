@@ -6,14 +6,14 @@
 
 
 <ion-content *ngIf="post" >
-    <div class="ion-padding">
-
-      <ion-card>
-        <img src="{{ post.better_featured_image.source_url }}" />
+    <div>
+      <img src="{{ post.better_featured_image.source_url }}" />
+      
+      <ion-card>        
         <ion-card-header>
           <ion-card-subtitle>
-              <ion-row *ngFor="let cat of categories" >                  
-                  <ion-col>
+              <ion-row >                  
+                  <ion-col size="auto" *ngFor="let cat of categories">
                     <ion-badge>
                         {{ cat.name }}
                     </ion-badge>

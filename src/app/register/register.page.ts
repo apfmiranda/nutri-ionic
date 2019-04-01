@@ -25,7 +25,7 @@ export class RegisterPage implements OnInit {
     .then(data => {
       console.log('Aque temos os dados: ', data);
       this.registradoComSucesso();
-      this.navCtrl.navigateRoot('/dicas');
+      this.navCtrl.navigateRoot('/tabs/dicas');
     })
     .catch((error: any) => {
 
